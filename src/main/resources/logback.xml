@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
+
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <appender name="FILE1" class="ch.qos.logback.core.FileAppender">
+        <file>generalLog.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%-10.10thread] %-5level %30.30logger{29}:%-4line %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE2" class="ch.qos.logback.core.FileAppender">
+        <file>customExceptionHandlerLog.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%-10.10thread] %-5level %30.30logger{29}:%-4line %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.arsen.exchange.exception.CustomExceptionHandler" additivity="false">
+        <appender-ref ref="FILE2"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="FILE1"/>
+        <appender-ref ref="CONSOLE"/>
+
+    </root>
+</configuration>
